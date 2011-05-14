@@ -1,0 +1,2 @@
+- Arrumar testes que fazem uso de diretorios, criar e deletar(setup/teardown)
+-- Version Ruby to Work fine ruby-1.9.1-p378

@@ -1,16 +1,13 @@
-require "rubygems"
-require 'net/ssh'
-require 'fileutils'
-require 'yaml'
-require 'net/sftp'
-
 module Gploy
+  
   class Configure
-    
-    include Helpers
+   include Helpers
+   
     VERSION = '0.1.5'
-
+    path = "config/config.yaml" 
+    
     def configure_server
+      log("Starting server Configurations")
       create_file_and_direcotry_unless_exists("config", "config.yaml")
       puts "Files created into the config directory. Now need edit config.yaml"
       puts ""
@@ -20,16 +17,28 @@ module Gploy
     end
     
     def configure_hook
-      read_config_file
+      config = read_config_file(path)
+      @url = config["config"]["url"]
+      @app_name = config["config"]["app_name"]
+      @user = config["config"]["user"]
+      @password = config["config"]["password"]
+      @origin = config["config"]["origin"]
+      log("Configure Hook")
       create_file_and_direcotry_unless_exists("config", "post-receive")
       puts "Now you should edit config/post-receive file, like this:"
       puts ""
-      post_commands
+      post_commands(config)
     end
   
     def setup
+      config = read_config_file(path)
+      @url = config["config"]["url"]
+      @app_name = config["config"]["app_name"]
+      @user = config["config"]["user"]
+      @password = config["config"]["password"]
+      @origin = config["config"]["origin"]
+      log("Start Setup...")
       check_if_dir_log_exists
-      read_config_file
       remote
       initialize_local_repo
       create_repo(@app_name)
@@ -45,17 +54,24 @@ module Gploy
     end
     
     def upload_hook
-      read_config_file
       remote
       update_hook(@user, @url, @app_name)
       puts "File successfully Updated"
     end
     
-    def read_config_file
-      config = YAML.load_file("config/config.yaml")
-      config["config"].each { |key, value| instance_variable_set("@#{key}", value) }
+    def  read_config_file(path)
+      begin
+        config = YAML.load_file(path)
+        raise "Invalid configuration - #{path}" if !config.is_a?(Hash)
+        $stderr.puts "Configuration ok from #{path}"
+      rescue => e
+        $stderr.puts "WARNING: I Could not read configuration file."
+        $stderr.puts "\t" + e.to_s
+        config = {}
+      end
+      config
     end
-    
+  
     def remote
       @shell = start(@url, @user, @password)
     end
@@ -115,7 +131,7 @@ module Gploy
     end
     
     def new_deploy
-      read_config_file
+       read_config_file(path)
       run_local("git checkout #{@branch} - && git push #{@origin} master")
     end
   
@@ -133,6 +149,11 @@ module Gploy
     
     def tmp_create(name)
       run_remote "cd rails_app/#{name}/ && mkdir tmp"
+    end
+    
+    def log(msg) 
+     a = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+     $stderr.puts(a + " " + msg)
     end
     
   end

@@ -19,7 +19,7 @@ module Gploy
     end
     
     def run_remote(command)
-      logger(command, "remote")
+     # logger(command, "remote")
       @shell.exec!(command)
     end
 
@@ -28,7 +28,7 @@ module Gploy
     end
 
     def run_local(command)
-      logger(command, "local")
+      #logger(command, "local")
       Kernel.system command
     end
 
@@ -54,25 +54,25 @@ module Gploy
 
     def migrate(name)
       if useMigrations?
-        logger("Run db:migrate", "remote")
+      #  logger("Run db:migrate", "remote")
         run_remote "cd rails_app/#{name}/ && rake db:migrate RAILS_ENV=production"
       end
-      logger("rake db:migrae => FALSE", nil)
+     # logger("rake db:migrae => FALSE", nil)
     end
 
     def restart_server(name)
-      logger("restart server", "remote")
+     # logger("restart server", "remote")
       run_remote "cd rails_app/#{name}/tmp && touch restart.txt"
     end
 
-    def post_commands
+    def post_commands(config)
       commands = <<CMD
         #!/bin/sh
-        cd ~/rails_app/#{@app_name}
+        cd ~/rails_app/#{config["config"]["app_name"]}
         env -i git reset --hard 
-        env -i git pull #{@origin} master
+        env -i git pull #{config["config"]["origin"]} master
         env -i rake db:migrate RAILS_ENV=production
-        env -i touch ~/rails_app/#{@app_name}/tmp/restart.txt 
+        env -i touch ~/rails_app/#{config["config"]["app_name"]}/tmp/restart.txt 
 CMD
          puts commands
     end
