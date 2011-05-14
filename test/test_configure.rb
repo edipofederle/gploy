@@ -15,7 +15,7 @@ class ConfigureTest < Test::Unit::TestCase
 	  @connection.expects(:start).once.returns(@ssh)
 	  @c = @connection.remote
 	  
-	   @path = File.join(Dir.pwd, '_config.yml')
+	  @path = File.join(Dir.pwd, '_config.yml')
 
 	  @url = "server_name"
     @user = "user_name"

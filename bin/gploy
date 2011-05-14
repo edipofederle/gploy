@@ -4,7 +4,7 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 help = <<HELP
 
-  Write this help
+  To learn about gploy visit github page at http://github.com/edipofederle/gploy or type rake -T to see all functions.
 
 HELP
 
@@ -41,17 +41,14 @@ opts = OptionParser.new do |opts|
     c.new_deploy
   end
   
-  opts.on("--configure", "New Deploy") do
+  opts.on("--configure", "Initial configuration") do
     c = Gploy::Configure.new
     c.configure_server
   end
-
   
 end
 
 opts.parse!
-
-# Get source and destintation from command line
 case ARGV.size
   when 0
     puts "Invalid options. Run `gploy --help` for assistance."

@@ -7,7 +7,7 @@ module Gploy
     path = "config/config.yaml" 
     
     def configure_server
-      log("Starting server Configurations")
+      log("Starting gploy configuration... create config.yaml")
       create_file_and_direcotry_unless_exists("config", "config.yaml")
       puts "Files created into the config directory. Now need edit config.yaml"
       puts ""
@@ -31,6 +31,7 @@ module Gploy
     end
   
     def setup
+      log("Starting gploy setup...")
       config = read_config_file(path)
       @url = config["config"]["url"]
       @app_name = config["config"]["app_name"]
@@ -54,6 +55,7 @@ module Gploy
     end
     
     def upload_hook
+      log("Realoding hook file...")
       remote
       update_hook(@user, @url, @app_name)
       puts "File successfully Updated"
