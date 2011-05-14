@@ -1,9 +1,13 @@
-Version 0.1.5 brings some improvements in the way it will deploy.
+Version 0.1.6 brings some improvements in the way it will deploy.
+
+Notes Version 0.1.6
+  - Rake -T show all features of gem
+  - This version dont have more features that previous, i just try improve the code, but it still is very ugly :D
 
 Notes Version 0.1.5
  -A new command called gploy -d
- -The log file was also changed to indicate that the command was run locally or remotely.
- -Now gploy only make deploy of content in a master branch, for this reason the line "branch" in the config.yaml file was been     deleted, so make sure that master branch its ok.
+ -The log file was also changed to indicate that the command is running locally or remotely.
+ -Now gploy only make deploy of content in a master branch, for this reason the line "branch" in the config.yaml file was  deleted, so make sure that master branch it ok.
 - The source code is still a little messy, but it was changed to better, the code now has 66.95% coverage.
 ## Introduction
 
@@ -80,10 +84,12 @@ If no error occurs, your project must be available now.
 From now when you want update your project simply do a commit of changes and run git push production master to update project in server or run:
    
 	> gploy -d
-#OBS: This is a initial version then careful when using it. If you find bugs please let me know, fell free for make a fork in project at [github](http://github.com/edipofederle/gploy) and fix the bugs :D.
+###OBS: This is a initial version then careful when using it. If you find bugs please let me know, fell free for make a fork in project at [github](http://github.com/edipofederle/gploy) and fix the bugs :D.
 
+## Thanks
+	- Marcelo Luiz Onhate ( http://about.me/onhate ) for correcting some things that README: D
 
-## LICENSE:
+### LICENSE:
 
 (The MIT License)
 

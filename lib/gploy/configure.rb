@@ -4,10 +4,13 @@ module Gploy
    include Helpers
    
     VERSION = '0.1.5'
-    path = "config/config.yaml" 
+    def initialize
+      @path = "config/config.yaml" 
+    end
     
-    def configure_server
-      log("Starting gploy configuration... create config.yaml")
+    
+    def configure_server      
+      log(green("Starting gploy configuration...create config.yaml"))
       create_file_and_direcotry_unless_exists("config", "config.yaml")
       puts "Files created into the config directory. Now need edit config.yaml"
       puts ""
@@ -17,7 +20,7 @@ module Gploy
     end
     
     def configure_hook
-      config = read_config_file(path)
+      config = read_config_file(@path)
       @url = config["config"]["url"]
       @app_name = config["config"]["app_name"]
       @user = config["config"]["user"]
@@ -32,7 +35,7 @@ module Gploy
   
     def setup
       log("Starting gploy setup...")
-      config = read_config_file(path)
+      config = read_config_file(@path)
       @url = config["config"]["url"]
       @app_name = config["config"]["app_name"]
       @user = config["config"]["user"]
