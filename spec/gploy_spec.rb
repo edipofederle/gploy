@@ -1,7 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require 'fakefs'
-
-
+require "spec_helper"
+require "rubygems"
+require "rspec"
+require "gploy"
+require "fakefs"
+require 'fakefs/spec_helpers'
 
 
 describe Gploy::Configure do 
@@ -53,7 +55,6 @@ describe Gploy::Configure do
       with_dir.should be true
     end
     
-  
   end
 
   context "Configuration" do

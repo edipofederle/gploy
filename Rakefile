@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rubygems/specification'
 require 'rake'
 require 'rake/gempackagetask'
-require 'spec/rake/spectask'
+require "rspec"
  
 GEM = "gploy"
 GEM_VERSION = "0.1.5"

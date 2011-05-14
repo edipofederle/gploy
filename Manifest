@@ -1,0 +1,17 @@
+Manifest
+Rakefile
+bin/gploy
+gploy.gemspec
+lib/TODO.txt
+lib/gploy.rb
+lib/gploy/configure.rb
+lib/gploy/helpers.rb
+lib/gploy/logger.rb
+lib/gploy/teste.rb
+test/config/config.yaml
+test/config/post-receive
+test/db/schema.rb
+test/helper.rb
+test/suite.rb
+test/test_configure.rb
+test/test_logger.rb
