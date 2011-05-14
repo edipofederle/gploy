@@ -19,7 +19,6 @@ module Gploy
     end
     
     def run_remote(command)
-     # logger(command, "remote")
       @shell.exec!(command)
     end
 
@@ -28,7 +27,6 @@ module Gploy
     end
 
     def run_local(command)
-      #logger(command, "local")
       Kernel.system command
     end
 
@@ -54,14 +52,11 @@ module Gploy
 
     def migrate(name)
       if useMigrations?
-      #  logger("Run db:migrate", "remote")
         run_remote "cd rails_app/#{name}/ && rake db:migrate RAILS_ENV=production"
       end
-     # logger("rake db:migrae => FALSE", nil)
     end
 
     def restart_server(name)
-     # logger("restart server", "remote")
       run_remote "cd rails_app/#{name}/tmp && touch restart.txt"
     end
 
