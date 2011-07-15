@@ -4,7 +4,6 @@ Rakefile
 bin/gploy
 config/config.yaml
 config/post-receive
-gploy.gemspec
 install.rb
 lib/TODO.txt
 lib/gploy.rb

@@ -27,7 +27,7 @@ class ConfigureTest < Test::Unit::TestCase
 	
 	def testShouldReturnGemVersion
 	  assert_not_nil(!nil,Gploy::Configure::VERSION)
-	  assert_equal("0.1.6", Gploy::VERSION)
+	  assert_equal("0.1.7", Gploy::VERSION)
 	end
 	def testShouldHaveALogPath
 	  assert_equal("./log/gploylog.log", Gploy::Configure::LOG_PATH);
