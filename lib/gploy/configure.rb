@@ -3,14 +3,14 @@ module Gploy
   class Configure
    include Helpers
    
-    VERSION = '0.1.5'
+    VERSION = '0.1.6'
     def initialize
       @path = "config/config.yaml" 
     end
     
     
     def configure_server      
-      log(green("Starting gploy configuration...create config.yaml"))
+      log("Starting gploy configuration...create config.yaml")
       create_file_and_direcotry_unless_exists("config", "config.yaml")
       puts "Files created into the config directory. Now need edit config.yaml"
       puts ""
