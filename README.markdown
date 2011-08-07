@@ -92,7 +92,7 @@ From now when you want update your project simply do a commit of changes and run
 ###OBS: This is a initial version then careful when using it. If you find bugs please let me know, fell free for make a fork in project at [github](http://github.com/edipofederle/gploy) and fix the bugs :D.
 
 ## Thanks
-	- Marcelo Luiz Onhate ( http://about.me/onhate ) for correcting some things that README: D
+	- Marcelo Luiz Onhate ( http://about.me/onhate ) for correcting some things in README: D
 
 ### LICENSE:
 
