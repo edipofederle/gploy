@@ -2,7 +2,7 @@ Notes Version 0.1.6
 
   - Rake -T show all features of gem
 
-  - This version dont have more features that previous, i just try improve the code, but it still is very ugly :D
+  - This version don't have more features that previous, i just try improve the code, but it still is very ugly :D
 
 Notes Version 0.1.5
  -A new command called gploy -d
