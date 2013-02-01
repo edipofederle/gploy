@@ -1,3 +1,6 @@
+# Don't work with ruby 1.9.x and Rails > 3. Needed Update.
+
+
 Notes Version 0.1.6
 
   - Rake -T show all features of gem
