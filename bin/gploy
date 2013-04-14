@@ -1,56 +1,12 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
-help = <<HELP
+require 'gploy'
 
-  To learn about gploy visit github page at http://github.com/edipofederle/gploy or type rake -T to see all functions.
+args = ARGV.dup
+ARGV.clear
+command = args.shift.strip rescue 'help'
 
-HELP
-
-require 'optparse'
-require "gploy"
-require "logger"
-
-exec = {}
-options = {}
-opts = OptionParser.new do |opts|
-  opts.banner = help
-  opts.on("--version", "Display current version") do
-    puts "Gploy " + Gploy::VERSION
-    exit 0
-  end
-    
-  opts.on("--pr", "Create post-receive file") do
-    c = Gploy::Configure.new
-    c.configure_hook
-  end
-  
-  opts.on("--setup", "Configure Project") do
-    c = Gploy::Configure.new
-    c.setup
-  end
-  
-  opts.on("--update-hook", "Update Hook File") do
-    c = Gploy::Configure.new
-    c.upload_hook
-  end
-  
-  opts.on("--deploy", "New Deploy") do
-    c = Gploy::Configure.new
-    c.new_deploy
-  end
-  
-  opts.on("--configure", "Initial configuration") do
-    c = Gploy::Configure.new
-    c.configure_server
-  end
-  
-end
-
-opts.parse!
-case ARGV.size
-  when 0
-    puts "Invalid options. Run `gploy --help` for assistance."
-    exit(1)
-end
+Gploy::Command.run(command)

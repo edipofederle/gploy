@@ -1,0 +1,7 @@
+config:
+  url: localhost
+  user: root
+  password: secret
+  app_name: my_app
+  branch: master
+  path: /var/www/apps

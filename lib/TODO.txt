@@ -1,1 +1,0 @@
-- Arrumar testes que fazem uso de diretorios, criar e deletar(setup/teardown)
