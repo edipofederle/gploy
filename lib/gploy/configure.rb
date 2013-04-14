@@ -1,6 +1,7 @@
 module Gploy
   
   class Configure
+    
    include Helpers
    
     VERSION = '0.1.7'
@@ -136,7 +137,7 @@ module Gploy
     end
     
     def new_deploy
-       read_config_file(path)
+      read_config_file(path)
       run_local("git checkout #{@branch} - && git push #{@origin} master")
     end
   

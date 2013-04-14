@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/helper'
+
 class ConfigureTest < Test::Unit::TestCase
   
   def  setup
