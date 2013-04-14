@@ -11,6 +11,7 @@ describe Reader do
     conf.app_name.should eq("my_app")
     conf.branch.should eq("master")
     conf.path.should eq("/var/www/apps")
+    conf.repo.should eq("https://github.com/edipofederle/blog.git")
   end
   
 end

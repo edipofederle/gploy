@@ -1,6 +1,6 @@
 class Reader
   
-  attr_accessor :url, :user, :password, :app_name, :branch, :path
+  attr_accessor :url, :user, :password, :app_name, :branch, :path, :repo
   
   def initialize(path)
     config = read_config_file(path)
@@ -9,6 +9,7 @@ class Reader
     @password  = config["config"]["password"]
     @app_name  = config["config"]["app_name"]
     @branch    = config["config"]["branch"]
+    @repo      = config["config"]["repo"]
     @path      = config["config"]["path"]
   end
   

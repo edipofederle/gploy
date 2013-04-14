@@ -8,11 +8,17 @@ describe Gploy do
     Net::SSH.stub(:start) { ssh_connection }
   end
   
-  it 'should test command' do
-    ssh_connection.should_receive(:exec!).ordered.with("mkdir test")
+  it 'should setup server side' do
+    ssh_connection.should_receive(:exec!).ordered.with("cd /var/www/apps && mkdir my_app")
     gploy = Gploy::Configure.new
     out = capture_stdout{gploy.run("deploy:setup")}
     out.should eq("Configuring server...\n")
+  end
+  
+  it "should clone repo into server" do
+    ssh_connection.should_receive(:exec!).ordered.with("cd /var/www/apps/my_app && git clone https://github.com/edipofederle/blog.git")
+    gploy = Gploy::Configure.new
+    gploy.run("deploy")
   end
 
   
@@ -21,6 +27,6 @@ describe Gploy do
     message = "invalid command. Valid commands are [\"help\", \"deploy:setup\", \"deploy\"]."
     expect { gploy.run("teste") }.to raise_error(ArgumentError, message)
   end
-
+  
   
 end

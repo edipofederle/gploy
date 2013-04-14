@@ -4,8 +4,8 @@ module Gploy
     
     include Remote
     def initialize
-      conf = Reader.new("spec/gploy.yml")
-      @remote = remote_command(conf.url, conf.user, conf.password)
+      @conf = Reader.new("spec/gploy.yml")
+      @remote = remote_command(@conf.url, @conf.user, @conf.password)
     end
     
     def run(command)
@@ -13,7 +13,12 @@ module Gploy
     
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
-        @remote.exec!("mkdir test")
+        @remote.exec!("cd #{@conf.path} && mkdir #{@conf.app_name}")
+      end
+      
+      if command == "deploy"
+        $stdout.puts "Cloning Repo into Server"
+        @remote.exec!("cd #{@conf.path}/#{@conf.app_name} && git clone #{@conf.repo}")
       end
     
     end

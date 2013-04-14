@@ -3,5 +3,6 @@ config:
   user: root
   password: secret
   app_name: my_app
+  repo: https://github.com/edipofederle/blog.git
   branch: master
   path: /var/www/apps
