@@ -9,3 +9,4 @@ end
 
 gem "net-ssh", "~> 2.6.7"
 gem "net-sftp", "~> 2.1.1"
+gem "fakefs", :require => "fakefs/safe"

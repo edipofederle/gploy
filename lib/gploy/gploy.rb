@@ -3,8 +3,9 @@ module Gploy
   class Configure
     
     include Remote
+    
     def initialize
-      @conf = Reader.new("spec/gploy.yml")
+      @conf = Reader.new("config/gploy.yml")
       @remote = remote_command(@conf.url, @conf.user, @conf.password)
     end
     

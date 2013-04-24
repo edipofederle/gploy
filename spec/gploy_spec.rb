@@ -1,11 +1,14 @@
 require 'spec_helper'
+require 'fakefs/spec_helpers'
 require 'gploy'
 
 describe Gploy do
-  
- let (:ssh_connection) { mock("SSH Connection") }
+
+  let (:ssh_connection) { mock("SSH Connection") }
   before (:each) do
     Net::SSH.stub(:start) { ssh_connection }
+    reader = Reader.new("lib/gploy/gploy.yml")
+    Reader.stub(:new).with("config/gploy.yml").and_return(reader)
   end
   
   it 'should setup server side' do
@@ -20,7 +23,6 @@ describe Gploy do
     gploy = Gploy::Configure.new
     gploy.run("deploy")
   end
-
   
   it "test bin" do
     gploy = Gploy::Configure.new
