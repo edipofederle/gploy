@@ -7,6 +7,7 @@ module Gploy
     def initialize
       unless File.exists?("config/gploy.yml")
         post_commands_server
+        exit(1)
       else
         @conf = Reader.new("config/gploy.yml")
         @remote = remote_command(@conf.url, @conf.user, @conf.password)
