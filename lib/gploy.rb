@@ -14,8 +14,8 @@ require 'fileutils'
 require 'yaml'
 require 'net/sftp'
 
-require 'gploy/reader'
-require 'gploy/remote'
-require 'gploy/gploy'
 require 'gploy/helpers'
+require 'gploy/reader'
+require 'gploy/configure'
+
 require 'gploy/version'

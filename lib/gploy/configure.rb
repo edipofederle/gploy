@@ -2,8 +2,8 @@ module Gploy
   
   class Configure
     
-    include Remote
-    
+   include Helpers
+        
     def initialize
       @conf = Reader.new("config/gploy.yml")
       @remote = remote_command(@conf.url, @conf.user, @conf.password)
@@ -13,6 +13,8 @@ module Gploy
       validate_command(command)      
     
       if command == "deploy:setup"
+        $stdout.puts "Add this to your gploy.conf file"
+        post_commands_server
         $stdout.puts "Configuring server..."
         @remote.exec!("cd #{@conf.path} && mkdir #{@conf.app_name}")
       end

@@ -9,4 +9,4 @@ args = ARGV.dup
 ARGV.clear
 command = args.shift.strip rescue 'help'
 
-Gploy::Command.run(command)
+Gploy::Configure.run(command)
