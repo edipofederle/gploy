@@ -5,12 +5,17 @@ module Gploy
    include Helpers
         
     def initialize
-      unless File.exists?("config/gploy.yml")
-        post_commands_server
-        exit(1)
-      else
-        @conf = Reader.new("config/gploy.yml")
-        @remote = remote_command(@conf.url, @conf.user, @conf.password)
+      begin
+        unless File.exists?("config/gploy.yml")
+          post_commands_server
+          $stdout.puts "Add this to your gploy.conf file\nExting..."
+        else
+          @conf = Reader.new("config/gploy.yml")
+          @remote = remote_command(@conf.url, @conf.user, @conf.password)
+        end
+      rescue
+        $stderr.puts "WARNING: I Could not read configuration file."
+        $stderr.puts "\t" + e.to_s
       end
     end
     
@@ -18,9 +23,8 @@ module Gploy
       validate_command(command)      
     
       if command == "deploy:setup"
-        $stdout.puts "Add this to your gploy.conf file"
         $stdout.puts "Configuring server..."
-        @remote.exec!("cd #{@conf.path} && mkdir #{@conf.app_name}")
+        @remote.exec!("cd #{@conf.path_to_my_repo_in_server} && mkdir #{@conf.app_name}.git && cd #{@conf.app_name}.git && git init --bare")
       end
       
       if command == "deploy"

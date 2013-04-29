@@ -4,6 +4,7 @@ config:
   password: secret
   app_name: my_app
   repo: https://github.com/edipofederle/blog.git
+  path_to_my_repo_in_server: /var/www/repos/
   branch: master
   path: /var/www/apps
   path_repo_server: /var/repo
