@@ -11,7 +11,6 @@ class Reader
     @branch    = config["config"]["branch"]
     @repo      = config["config"]["repo"]
     @path      = config["config"]["path"]
-    @path_to_my_repo_in_server = config["config"]["path_to_my_repo_in_server"]
     @path_repo_server      = config["config"]["path_repo_server"]
   end
   
