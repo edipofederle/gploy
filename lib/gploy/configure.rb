@@ -25,8 +25,8 @@ module Gploy
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
         new_release = Time.now.to_s.gsub(/\W/, '')
-        @remote.exec!("cd #{@conf.path} && mkdir #{@conf.app_name} && cd #{@conf.path}/#{@conf.app_name} && mkdir #{new_release}}")
-        @remote.exec!("cd #{@conf.path}/new_release/ && git clone #{@conf.repo}")
+        @remote.exec!("cd #{@conf.path} && mkdir #{@conf.app_name} && cd #{@conf.path}/#{@conf.app_name} && mkdir #{new_release}")
+        @remote.exec!("cd #{@conf.path}/#{new_release}/ && git clone #{@conf.repo}")
       end
       
       if command == "deploy"
