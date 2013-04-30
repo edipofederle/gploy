@@ -24,7 +24,7 @@ module Gploy
     
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
-        @remote.exec!("cd #{@conf.path_repo_server} && mkdir #{@conf.app_name}.git && cd #{@conf.app_name}.git && git init --bare")
+        @remote.exec!("cd #{@conf.path} && git clone #{@conf.repo}")
       end
       
       if command == "deploy"

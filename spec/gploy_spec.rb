@@ -6,7 +6,6 @@ describe Gploy do
   
   let (:ssh_connection) { mock("SSH Connection") }
   before (:each) do
-  
     Net::SSH.stub(:start) { ssh_connection }
     @reader = Reader.new("lib/gploy/gploy.yml")
     Reader.stub(:new).with("config/gploy.yml").and_return(@reader)
@@ -14,7 +13,7 @@ describe Gploy do
   
   it 'should setup server side' do
     File.stub(:exists?).with("config/gploy.yml").and_return(true)
-    ssh_connection.should_receive(:exec!).ordered.with("cd /var/www/repos/ && mkdir my_app.git && cd my_app.git && git init --bare")
+    ssh_connection.should_receive(:exec!).ordered.with("cd /var/repo && mkdir my_app.git && cd my_app.git && git init --bare")
     gploy = Gploy::Configure.new
     out = capture_stdout{gploy.run("deploy:setup")}
     out.should eq("Configuring server...\n")
