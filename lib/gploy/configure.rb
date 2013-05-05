@@ -33,7 +33,7 @@ module Gploy
       if command == "deploy:tasks"
         Settings.tasks.each do |command|   
           unless Settings.ruby_env == nil
-            execute_task(Settings.ruby_env[:rake].concat(" #{command[1]}"))
+            execute_task(command[1].gsub("rake" Settings.ruby_env[:rake]))
           end
         end
       end
@@ -41,7 +41,7 @@ module Gploy
     
     def execute_task(line)
       lines = IO.readlines(".deploys")
-      puts line
+      puts "cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{lines.last.tr("\n","")} && #{line}"
       puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{lines.last.tr("\n","")} && #{line}")
     end
     
