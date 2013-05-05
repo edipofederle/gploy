@@ -5,7 +5,6 @@ module Gploy
    include Helpers
         
     def initialize
-      
       begin
         unless File.exists?("config/gploy.yml")
           post_commands_server
@@ -23,7 +22,7 @@ module Gploy
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
         new_release = Time.now.to_s.gsub(/\W/, '')
-       puts  @remote.exec!("cd #{Settings.deploy[:path]} && mkdir #{Settings.deploy[:app_name]} && cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && mkdir #{new_release}")
+        puts @remote.exec!("cd #{Settings.deploy[:path]} && mkdir #{Settings.deploy[:app_name]} && cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && mkdir #{new_release}")
         puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && git clone #{Settings.deploy[:repo]} #{new_release}")
         
         update_syn_link(new_release)
@@ -33,10 +32,21 @@ module Gploy
       if command == "deploy:tasks"
         Settings.tasks.each do |command|   
           unless Settings.ruby_env == nil
-            execute_task( command[1].gsub("rake", Settings.ruby_env[:rake]) )
+            if command.include?("rake")
+              execute_task(command[1].gsub("rake", Settings.ruby_env[:rake]))
+            end
+          else
+            execute_tas(command[1])
           end
         end
       end
+      
+      restart(new_release)
+      
+    end
+    
+    def restart(release)
+      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && touch tmp/restart.txt")
     end
     
     def execute_task(line)
@@ -46,7 +56,7 @@ module Gploy
     end
     
     def update_syn_link(new_release)
-     @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && ln -s #{new_release}/public/ current")
+     @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && ln -s #{new_release} current")
     end
     
     def update_number_of_deployments(new_release)
