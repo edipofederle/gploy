@@ -1,0 +1,14 @@
+ruby_env:
+  rake: /root/.rbenv/versions/1.9.3-p194/bin/rake
+
+deploy:
+  url:    localhost
+  user:   root
+  password: secret
+  app_name: my_app
+  repo: https://github.com/edipofederle/blog.git
+  path: /var/www/apps
+  number_releases: 3
+
+tasks:
+  dbmigrate:   RAILS_ENV=production rake db:migrate

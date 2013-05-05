@@ -18,5 +18,7 @@ require 'gploy/helpers'
 require 'gploy/reader'
 require 'gploy/configure'
 require 'gploy/TaskFileNotFound'
+require 'gploy/Settings'
+require 'gploy/deep_symbolize'
 
 require 'gploy/version'

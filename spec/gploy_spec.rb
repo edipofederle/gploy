@@ -6,8 +6,6 @@ describe Gploy do
   let (:ssh_connection) { mock("SSH Connection") }
   before (:each) do
     Net::SSH.stub(:start) { ssh_connection }
-    @reader = Reader.new("lib/gploy/gploy.yml")
-    Reader.stub(:new).with("config/gploy.yml").and_return(@reader)
   end
   
   it 'should setup server side' do
@@ -21,19 +19,6 @@ describe Gploy do
     out = capture_stdout{gploy.run("deploy:setup")}
   end
   
-  it'should raise TaskFileNotFound' do
-    gploy = Gploy::Configure.new
-    expect {gploy.run("deploy:tasks") }.to raise_error(TaskFileNotFound, "File with tasks not found. The file should be inside config folder with name talks")
-  end  
-  
-  it 'should read and execute tasks' do
-    File.stub(:exists?).with("config/gploy.yml").and_return(true)
-    File.stub(:exists?).with("config/tasks").and_return(true)
-    File.stub(:readlines).with("config/tasks").and_return { ["RAILS_ENV=production rake db:migrate"] }
-    ssh_connection.should_receive(:exec!).ordered.with("cd /var/www/apps/my_app && RAILS_ENV=production rake db:migrate")
-    gploy = Gploy::Configure.new
-    gploy.run("deploy:tasks")
-  end
   
   it "test bin" do
     gploy = Gploy::Configure.new

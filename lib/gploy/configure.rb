@@ -1,23 +1,20 @@
 module Gploy
-  
+   
   class Configure
     
    include Helpers
         
     def initialize
+      
       begin
         unless File.exists?("config/gploy.yml")
           post_commands_server
           $stdout.puts "Add this to your gploy.conf file\nExting..."
         else
-          @conf = Reader.new("config/gploy.yml")
-          @remote = remote_command(@conf.url, @conf.user, @conf.password)
+          Settings.load!("config/gploy.yml")
+          @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])
         end
-      rescue
-        $stderr.puts "WARNING: I Could not read configuration file."
-        $stderr.puts "\t" + e.to_s
       end
-      
     end
     
     def run(command)
@@ -26,33 +23,33 @@ module Gploy
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
         new_release = Time.now.to_s.gsub(/\W/, '')
-        @remote.exec!("cd #{@conf.path} && mkdir #{@conf.app_name} && cd #{@conf.path}/#{@conf.app_name} && mkdir #{new_release}")
-        @remote.exec!("cd #{@conf.path}/#{@conf.app_name} && git clone #{@conf.repo} #{new_release}")
+        @remote.exec!("cd #{Settings.deploy[:path]} && mkdir #{Settings.deploy[:app_name]} && cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && mkdir #{new_release}")
+        @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && git clone #{Settings.deploy[:repo]} #{new_release}")
         
         update_syn_link(new_release)
-        update_number_of_deployments
+        update_number_of_deployments(new_release)
       end
       
       if command == "deploy:tasks"
-        unless File.exists?("config/tasks")
-          raise TaskFileNotFound, "File with tasks not found. The file should be inside config folder with name talks"
-        else
-         File.readlines('config/tasks').each do |line|
-          execute_task(line)
-         end
+        Settings.tasks.each do |command|   
+          unless Settings.ruby_env == nil
+            execute_task(Settings.ruby_env[:rake] + command)
+          end
         end
       end
     end
     
-    def execute_task(command)
-      @remote.exec!("cd #{@conf.path}/#{@conf.app_name} && #{command}")
+    def execute_task(line)
+      lines = IO.readlines(".deploys")
+      puts line
+      @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{lines.last.tr("\n","")} && #{line}")
     end
     
     def update_syn_link(new_release)
-     @remote.exec!("cd #{@conf.path}/#{@conf.app_name} && ln -s #{new_release}/public/ current")
+     @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && ln -s #{new_release}/public/ current")
     end
     
-    def update_number_of_deployments
+    def update_number_of_deployments(new_release)
       
       unless File.exist?(".deploys")
         File.write(".deploys", "")
@@ -61,13 +58,13 @@ module Gploy
       count = File.foreach(".deploys").inject(0) {|c, line| c+1}
       puts "Number of releases: #{count}"
       
-      if count == @conf.number_releases
+      if count == Settings.deploy[:number_releases]
         puts "Remove all releases...."
         File.open(".deploys", 'w') { |file| file.truncate(0)}  
-        @remote.exec!("cd #{@conf.path}/#{@conf.app_name} &&  rm -rf *")
+        @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} &&  rm -rf *")
       end
       
-      File.open(".deploys", 'a') { |file| file.puts("1") }
+      File.open(".deploys", 'a') { |file| file.puts(new_release) }
     end
   
     def validate_command(command)
