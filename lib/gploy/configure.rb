@@ -33,7 +33,7 @@ module Gploy
       if command == "deploy:tasks"
         Settings.tasks.each do |command|   
           unless Settings.ruby_env == nil
-            execute_task(command[1].gsub("rake" Settings.ruby_env[:rake]))
+            execute_task( command[1].gsub("rake", Settings.ruby_env[:rake]) )
           end
         end
       end
