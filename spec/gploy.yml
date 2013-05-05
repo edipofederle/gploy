@@ -7,4 +7,5 @@ config:
   path_to_my_repo_in_server: /var/www/repos/
   branch: master
   path: /var/www/apps
+  number_releases: 3
   path_repo_server: /var/repo

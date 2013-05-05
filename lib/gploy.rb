@@ -17,5 +17,6 @@ require 'net/sftp'
 require 'gploy/helpers'
 require 'gploy/reader'
 require 'gploy/configure'
+require 'gploy/TaskFileNotFound'
 
 require 'gploy/version'

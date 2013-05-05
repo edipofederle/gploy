@@ -10,6 +10,7 @@ describe Reader do
     conf.password.should eq("secret")
     conf.app_name.should eq("my_app")
     conf.branch.should eq("master")
+    conf.number_releases.should eq(3)
     conf.path.should eq("/var/www/apps")
     conf.repo.should eq("https://github.com/edipofederle/blog.git")
   end
