@@ -12,7 +12,7 @@ module Gploy
           $stdout.puts "Add this to your gploy.conf file\nExting..."
         else
           Settings.load!("config/gploy.yml")
-          @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])
+          puts @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])
         end
       end
     end
@@ -23,8 +23,8 @@ module Gploy
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
         new_release = Time.now.to_s.gsub(/\W/, '')
-        @remote.exec!("cd #{Settings.deploy[:path]} && mkdir #{Settings.deploy[:app_name]} && cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && mkdir #{new_release}")
-        @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && git clone #{Settings.deploy[:repo]} #{new_release}")
+       puts  @remote.exec!("cd #{Settings.deploy[:path]} && mkdir #{Settings.deploy[:app_name]} && cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && mkdir #{new_release}")
+        puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && git clone #{Settings.deploy[:repo]} #{new_release}")
         
         update_syn_link(new_release)
         update_number_of_deployments(new_release)
@@ -33,7 +33,7 @@ module Gploy
       if command == "deploy:tasks"
         Settings.tasks.each do |command|   
           unless Settings.ruby_env == nil
-            execute_task(Settings.ruby_env[:rake] + command)
+            execute_task(Settings.ruby_env[:rake].concat(" #{command[1]}"))
           end
         end
       end
@@ -42,7 +42,7 @@ module Gploy
     def execute_task(line)
       lines = IO.readlines(".deploys")
       puts line
-      @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{lines.last.tr("\n","")} && #{line}")
+      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{lines.last.tr("\n","")} && #{line}")
     end
     
     def update_syn_link(new_release)

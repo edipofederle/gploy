@@ -26,4 +26,14 @@ describe Gploy do
     expect { gploy.run("teste") }.to raise_error(ArgumentError, message)
   end
   
+  it "should execute tasks" do
+    new_release = Time.now.to_s.gsub(/\W/, '')
+    ssh_connection.should_receive(:exec!).ordered.with("cd /var/www/apps/my_app/#{new_release} && /root/.rbenv/versions/1.9.3-p194/bin/rake RAILS_ENV=production rake db:migrate")
+    gploy = Gploy::Configure.new
+    gploy.run("deploy:tasks")
+    
+    
+    
+  end
+  
 end

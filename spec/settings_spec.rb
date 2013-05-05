@@ -17,4 +17,6 @@ describe Settings do
    Settings.load!("spec/config/gploy.yml") 
    Settings.tasks[:dbmigrate].should eq "RAILS_ENV=production rake db:migrate"
   end
+  
+
 end
