@@ -2,3 +2,6 @@ minhagem.gemspec
 pkg
 coverage/*.*
 *.swp
+
+.DS_Store
+lib/.DS_Store
