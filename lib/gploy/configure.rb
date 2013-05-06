@@ -30,9 +30,10 @@ module Gploy
       end
       
       if command == "deploy:tasks"
-        Settings.tasks.each do |command|   
+        Settings.tasks.each do |command|
+          puts "executing: #{command} ..."   
           unless Settings.ruby_env == nil
-            if command.include?("rake")
+            if command[1].include?("rake")
               execute_task(command[1].gsub("rake", Settings.ruby_env[:rake]))
             end
           else
@@ -46,7 +47,7 @@ module Gploy
     end
     
     def restart(release)
-      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && touch tmp/restart.txt")
+      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && mkdir tmp && touch tmp/restart.txt")
     end
     
     def execute_task(line)
