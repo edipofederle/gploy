@@ -33,6 +33,10 @@ validate_command(command)
 if command == "-version"
   puts  Gploy::VERSION
   exit
+elsif command == "help"
+  puts "see: https://github.com/edipofederle/gploy"
+  exit
+else
+  gploy.run(command)
 end
 
-gploy.run(command)
