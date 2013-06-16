@@ -7,6 +7,13 @@ require 'gploy'
 
 gploy = Gploy::Configure.new
 
+def validate_command(command)
+  commands = %w[-version help deploy:setup deploy:tasks]
+  unless commands.include?(command)
+    raise ArgumentError, "invalid command. Valid commands are #{commands}."
+  end
+end
+
 puts "------ GPLOY ------"
 
 args = ARGV.dup
@@ -23,11 +30,3 @@ elsif command == "help"
 end
 
 gploy.run(command)
-
-
-def validate_command(command)
-  commands = %w[-version help deploy:setup deploy:tasks]
-  unless commands.include?(command)
-    raise ArgumentError, "invalid command. Valid commands are #{commands}."
-  end
-end
