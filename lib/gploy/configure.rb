@@ -15,9 +15,8 @@ module Gploy
     
     def run(command)
       Settings.load!("config/gploy.yml")
-      puts @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])
-      validate_command(command)      
-    
+      puts @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])    
+      
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
         new_release = Time.now.to_s.gsub(/\W/, '')
@@ -76,13 +75,6 @@ module Gploy
       end
       
       File.open(".deploys", 'a') { |file| file.puts(new_release) }
-    end
-  
-    def validate_command(command)
-      commands = %w[-version help deploy:setup deploy:tasks]
-      unless commands.include?(command)
-        raise ArgumentError, "invalid command. Valid commands are #{commands}."
-      end
     end
   
   end

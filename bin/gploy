@@ -11,11 +11,23 @@ puts "------ GPLOY ------"
 
 args = ARGV.dup
 ARGV.clear
-command = args.shift.strip rescue 'help'
+command = args.shift.strip rescue "help"
+
+validate_command(command)  
 
 if command == "-version"
   puts  Gploy::VERSION
   exit
+elsif command == "help"
+  
 end
 
 gploy.run(command)
+
+
+def validate_command(command)
+  commands = %w[-version help deploy:setup deploy:tasks]
+  unless commands.include?(command)
+    raise ArgumentError, "invalid command. Valid commands are #{commands}."
+  end
+end
