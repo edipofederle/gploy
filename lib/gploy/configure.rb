@@ -9,14 +9,13 @@ module Gploy
         unless File.exists?("config/gploy.yml")
           post_commands_server
           $stdout.puts "Add this to your gploy.conf file\nExting..."
-        else
-          Settings.load!("config/gploy.yml")
-          puts @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])
         end
       end
     end
     
     def run(command)
+      Settings.load!("config/gploy.yml")
+      puts @remote = remote_command(Settings.deploy[:url], Settings.deploy[:user], Settings.deploy[:password])
       validate_command(command)      
     
       if command == "deploy:setup"
