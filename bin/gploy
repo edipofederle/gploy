@@ -5,12 +5,15 @@ $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
 require 'gploy'
 
+COMANDS = %w[-version help deploy:setup deploy:tasks]
+
 gploy = Gploy::Configure.new
 
 def validate_command(command)
-  commands = %w[-version help deploy:setup deploy:tasks]
-  unless commands.include?(command)
-    raise ArgumentError, "invalid command. Valid commands are #{commands}."
+  
+  unless COMANDS.include?(command)
+    puts "invalid command. Valid commands are #{commands}."
+    exit
   end
 end
 
@@ -18,6 +21,11 @@ puts "------ GPLOY ------"
 
 args = ARGV.dup
 ARGV.clear
+if args.empty?
+  puts "invalid command. Valid commands are #{COMANDS}."
+  exit
+end
+
 command = args.shift.strip
 
 validate_command(command)  
@@ -25,8 +33,6 @@ validate_command(command)
 if command == "-version"
   puts  Gploy::VERSION
   exit
-elsif command.empty?
-  puts "Help"
 end
 
 gploy.run(command)
