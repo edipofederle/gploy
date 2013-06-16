@@ -46,7 +46,7 @@ module Gploy
     end
     
     def restart(release)
-      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && touch tmp/restart.txt")
+      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && mkdir tmp && touch tmp/restart.txt")
     end
     
     def execute_task(line)
