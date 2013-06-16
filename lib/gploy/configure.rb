@@ -22,11 +22,12 @@ module Gploy
       if command == "deploy:setup"
         $stdout.puts "Configuring server..."
         new_release = Time.now.to_s.gsub(/\W/, '')
+        
         puts @remote.exec!("cd #{Settings.deploy[:path]} && mkdir #{Settings.deploy[:app_name]} && cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && mkdir #{new_release}")
         puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && git clone #{Settings.deploy[:repo]} #{new_release}")
         
-        update_syn_link(new_release)
         update_number_of_deployments(new_release)
+        update_syn_link(new_release)
       end
       
       if command == "deploy:tasks"
@@ -47,7 +48,7 @@ module Gploy
     end
     
     def restart(release)
-      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && mkdir tmp && touch tmp/restart.txt")
+      puts @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]}/#{release} && touch tmp/restart.txt")
     end
     
     def execute_task(line)
