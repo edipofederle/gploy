@@ -18,15 +18,15 @@ puts "------ GPLOY ------"
 
 args = ARGV.dup
 ARGV.clear
-command = args.shift.strip rescue "help"
+command = args.shift.strip
 
 validate_command(command)  
 
 if command == "-version"
   puts  Gploy::VERSION
   exit
-elsif command == "help"
-  
+elsif command.empty?
+  puts "Help"
 end
 
 gploy.run(command)
