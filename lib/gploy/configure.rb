@@ -80,9 +80,13 @@ module Gploy
     end
   
     def validate_command(command)
-      commands = %w[help deploy:setup deploy:tasks]
+      commands = %w[-version help deploy:setup deploy:tasks]
       unless commands.include?(command)
         raise ArgumentError, "invalid command. Valid commands are #{commands}."
+      end
+      if command == "-version"
+        puts  Gploy::VERSION
+        exit
       end
     end
   
