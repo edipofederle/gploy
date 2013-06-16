@@ -83,10 +83,6 @@ module Gploy
       unless commands.include?(command)
         raise ArgumentError, "invalid command. Valid commands are #{commands}."
       end
-      if command == "-version"
-        puts  Gploy::VERSION
-        exit
-      end
     end
   
   end

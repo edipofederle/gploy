@@ -13,4 +13,9 @@ args = ARGV.dup
 ARGV.clear
 command = args.shift.strip rescue 'help'
 
+if command == "-version"
+  puts  Gploy::VERSION
+  exit
+end
+
 gploy.run(command)
