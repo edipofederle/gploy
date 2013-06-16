@@ -56,7 +56,8 @@ module Gploy
     end
     
     def update_syn_link(new_release)
-     @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && rm current && ln -s #{new_release} current")
+     @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && rm current")
+     @remote.exec!("cd #{Settings.deploy[:path]}/#{Settings.deploy[:app_name]} && ln -s #{new_release} current")
     end
     
     def update_number_of_deployments(new_release)
