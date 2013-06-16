@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gploy (0.0.1)
+    gploy (0.2.0)
 
 GEM
   remote: https://rubygems.org/
